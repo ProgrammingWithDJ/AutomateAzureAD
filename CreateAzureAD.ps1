@@ -10,6 +10,7 @@ $MSGRAPHAPI_BaseURL = "https://graph.microsoft.com/v1.0"
 $AzureAppName = "YourAppNameHere"
 
 #Auth MS Graph API and Get Header
+Write-host "Creating Azure Acess Token" 
 $MSGRAPHAPI_tokenBody = @{  
     Grant_Type    = "client_credentials"  
     Scope         = "https://graph.microsoft.com/.default"  
@@ -22,7 +23,7 @@ $MSGRAPHAPI_headers = @{
     "Content-type"  = "application/json"
 }
 
-
+Write-host "Adding Parameters" 
 #Create Azure App Reg
 $CreateAzureAppReg_Body = @"
     {
@@ -39,7 +40,7 @@ $CreateAzureAppReg_Body = @"
         }
     }
 "@
-
+Write-host "Sending POST request" 
 $CreateAzureAppReg_Params = @{
     Method = "POST"
     Uri    = "$MSGRAPHAPI_BaseURL/applications"
@@ -50,4 +51,4 @@ $CreateAzureAppReg_Params = @{
 
 $Result = Invoke-RestMethod @CreateAzureAppReg_Params
 
-$Result.appId #ClientID
+Write-host "Created App Registration client ID"  $Result.appId #ClientID
